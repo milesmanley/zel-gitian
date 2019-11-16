@@ -122,17 +122,17 @@
 - include_tasks: keys.yml
   tags: keys
 
-- name: Clone git repository for Zcash.
+- name: Clone git repository for Zelcash.
   git:
-    repo: "{{ zcash_git_repo_url }}"
-    dest: "/home/{{ gitian_user }}/zcash"
-    version: "{{ zcash_version }}"
+    repo: "{{ zelcash_git_repo_url }}"
+    dest: "/home/{{ gitian_user }}/zelcash"
+    version: "{{ zelcash_version }}"
     force: yes
   become_user: "{{ gitian_user }}"
 
 - name: Clone git repository for Gitian signatures.
   git:
-    repo: "{{ zcash_gitian_sigs_repo }}"
+    repo: "{{ zelcash_gitian_sigs_repo }}"
     dest: "/home/{{ gitian_user }}/gitian.sigs"
     version: master
     force: yes
@@ -146,7 +146,7 @@
   become: yes
 
 - name: Figure out the Vagrant VM's SSH port number.
-  local_action: "shell vagrant ssh-config zcash-build | grep Port | awk {'print $2'}"
+  local_action: "shell vagrant ssh-config zelcash-build | grep Port | awk {'print $2'}"
   register: vagrant_ssh_port
   become: no
 
@@ -205,5 +205,5 @@
   debug:
     msg: >-
       Finished bootstrapping the Gitian host VM!
-      To enter the environment, run `vagrant ssh zcash-build`
+      To enter the environment, run `vagrant ssh zelcash-build`
       and then use `./gitian-build.sh` to kick off a build.

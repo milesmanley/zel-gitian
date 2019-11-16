@@ -5,4 +5,4 @@
 gitian.sigs/*
 local/*
 !local/README.md
-zcash-binaries/*
+zelcash-binaries/*

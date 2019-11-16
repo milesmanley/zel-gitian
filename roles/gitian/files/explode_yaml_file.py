@@ -9,7 +9,7 @@ from ruamel.yaml.scalarstring import DoubleQuotedScalarString
 
 # For a command like this...
 #
-# explode_yaml_file.py zcash/contrib/gitian-descriptors/gitian-linux.yml suites output_dir
+# explode_yaml_file.py zelcash/contrib/gitian-descriptors/gitian-linux.yml suites output_dir
 #
 # ...with a gitian-linux.yml file like this...
 #

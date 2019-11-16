@@ -1,10 +1,10 @@
 ---
-- name: Apply the Zcash Gitian builder role.
+- name: Apply the Zelcash Gitian builder role.
   become: yes
-  hosts: localhost:zcash-build
+  hosts: localhost:zelcash-build
   vars:
-    zcash_git_repo_url: "{{ lookup('env','ZCASH_GIT_REPO_URL') }}"
-    zcash_version: "{{ lookup('env','ZCASH_VERSION') }}"
+    zelcash_git_repo_url: "{{ lookup('env','ZELCASH_GIT_REPO_URL') }}"
+    zelcash_version: "{{ lookup('env','ZELCASH_VERSION') }}"
     git_name: "{{ lookup('env','GIT_NAME') }}"
     git_email: "{{ lookup('env','GIT_EMAIL') }}"
     gpg_key_name: "{{ lookup('env','GPG_KEY_NAME') }}"

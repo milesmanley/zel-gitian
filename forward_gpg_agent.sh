@@ -6,8 +6,8 @@ if [ -z "$GPG_SOCK" ] ; then
     exit 1
 fi
 
-vagrant ssh zcash-build -- rm -f /home/vagrant/.gnupg/S.gpg-agent
-vagrant ssh zcash-build -- -t \
+vagrant ssh zelcash-build -- rm -f /home/vagrant/.gnupg/S.gpg-agent
+vagrant ssh zelcash-build -- -t \
     -R /home/vagrant/.gnupg/S.gpg-agent:$GPG_SOCK \
     -o StreamLocalBindUnlink=yes \
     -o ExitOnForwardFailure=yes

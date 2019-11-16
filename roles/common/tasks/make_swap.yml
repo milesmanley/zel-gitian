@@ -5,7 +5,7 @@
   register: existing_swapfile_result
 
 - name: Allocate swapfile.
-  command: "fallocate -l {{ zcash_swapfile_size }} /swapfile"
+  command: "fallocate -l {{ zelcash_swapfile_size }} /swapfile"
   when: not existing_swapfile_result.stat.exists
 
 - name: Set permissions of swapfile.
@@ -33,5 +33,5 @@
 - name: Set vm.swappiness in sysctl.
   sysctl:
     name: vm.swappiness
-    value: "{{ zcash_vm_swappiness }}"
+    value: "{{ zelcash_vm_swappiness }}"
     state: present

@@ -11,9 +11,9 @@ linux=true
 
 # Other Basic variables
 SIGNER="{{ gpg_key_name }}"
-VERSION={{ zcash_version }}
+VERSION={{ zelcash_version }}
 commit=false
-url={{ zcash_git_repo_url }}
+url={{ zelcash_git_repo_url }}
 proc=2
 mem=3584
 lxc=true
@@ -24,10 +24,10 @@ commitFiles=true
 gitian_builder_repo_path=${HOME}/gitian-builder
 gitian_sigs_repo_path=${HOME}/gitian.sigs
 
-zcash_repo_dir_path=${HOME}/zcash
-gitian_descriptor_path=${zcash_repo_dir_path}/contrib/gitian-descriptors/gitian-linux.yml
+zelcash_repo_dir_path=${HOME}/zelcash
+gitian_descriptor_path=${zelcash_repo_dir_path}/contrib/gitian-descriptors/gitian-linux.yml
 
-zcash_binaries_dir_path=${HOME}/zcash-binaries
+zelcash_binaries_dir_path=${HOME}/zelcash-binaries
 
 build_dir_path=${gitian_builder_repo_path}/build
 suite_descriptors_dir_path=${gitian_builder_repo_path}/suites
@@ -36,7 +36,7 @@ suite_descriptors_dir_path=${gitian_builder_repo_path}/suites
 read -d '' usage <<- EOF
 Usage: $scriptName [-c|u|v|b|o|h|j|m|] signer version
 
-Run this script from the directory containing the zcash, gitian-builder, and gitian.sigs repositories.
+Run this script from the directory containing the zelcash, gitian-builder, and gitian.sigs repositories.
 
 Arguments:
 signer          GPG signer to sign each build assert file
@@ -44,7 +44,7 @@ version		Version number, commit, or branch to build. If building a commit or bra
 
 Options:
 -c|--commit	Indicate that the version argument is for a commit or branch
--u|--url	Specify the URL of the repository. Default is {{ zcash_git_repo_url }}
+-u|--url	Specify the URL of the repository. Default is {{ zelcash_git_repo_url }}
 -v|--verify 	Verify the gitian build
 -b|--build	Do a gitian build
 -j		Number of processes to use. Default 2
@@ -171,7 +171,7 @@ fi
 echo ${COMMIT}
 
 # Set up build
-pushd ${zcash_repo_dir_path}
+pushd ${zelcash_repo_dir_path}
 git fetch
 git checkout ${COMMIT}
 popd
@@ -183,7 +183,7 @@ suites=$(explode_yaml_file.py ${gitian_descriptor_path} suites ${suite_descripto
 if [[ $build = true ]]
 then
 	# Make output folder
-	mkdir -p ${zcash_binaries_dir_path}/${VERSION}
+	mkdir -p ${zelcash_binaries_dir_path}/${VERSION}
 
 	# Linux
 	if [[ $linux = true ]]
@@ -202,7 +202,7 @@ then
             mkdir -p inputs
             rm -rf ${gitian_builder_repo_path}/cache/* # Clear cache directory before each build
 
-            make -C ${zcash_repo_dir_path}/depends download SOURCES_PATH=${gitian_builder_repo_path}/cache/common
+            make -C ${zelcash_repo_dir_path}/depends download SOURCES_PATH=${gitian_builder_repo_path}/cache/common
 
             suite_image_path=${gitian_builder_repo_path}/base-${suite}-amd64
             echo "suite_image_path: ${suite_image_path}"
@@ -216,13 +216,13 @@ then
             echo "Compiling variant: ${VERSION}_${suite}"
             echo ""
 
-            ./bin/gbuild -j ${proc} -m ${mem} --commit zcash=${COMMIT} --url zcash=${url} ${suite_dir_path}/gitian-linux.yml
+            ./bin/gbuild -j ${proc} -m ${mem} --commit zelcash=${COMMIT} --url zelcash=${url} ${suite_dir_path}/gitian-linux.yml
             ./bin/gsign -p "$signProg" --signer "$SIGNER" --release ${VERSION}_${suite} --destination ${gitian_sigs_repo_path}/ ${suite_dir_path}/gitian-linux.yml
 
-            suite_binaries_dir_path=${zcash_binaries_dir_path}/${VERSION}/${suite}
+            suite_binaries_dir_path=${zelcash_binaries_dir_path}/${VERSION}/${suite}
             mkdir ${suite_binaries_dir_path}
 
-            mv ${build_dir_path}/out/zcash-*.tar.gz ${build_dir_path}/out/src/zcash-*.tar.gz ${suite_binaries_dir_path}
+            mv ${build_dir_path}/out/zelcash-*.tar.gz ${build_dir_path}/out/src/zelcash-*.tar.gz ${suite_binaries_dir_path}
 
             popd  # pushd ${gitian_builder_repo_path}
 
